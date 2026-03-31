@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#020617" />
+    <title>Fee Concession</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="app-shell">
+        <header class="hero-header">
+          <p class="eyebrow">Smart Calculator</p>
+          <h1>Fee Concession</h1>
+        </header>
+
+        <section class="controls" aria-label="Fee concession inputs">
+          <div class="field select-field">
+            <label for="select">Select Class</label>
+            <select id="select" required></select>
+          </div>
+
+          <div class="field amount-field">
+            <label for="input">Enter Amount</label>
+            <div class="currency-input">
+              <input type="number" id="input" placeholder="Enter Amount" min="0" />
+              <span class="currency-symbol" aria-hidden="true">&#8377;</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard yearwise-hidden" id="dashboard">
+          <article class="info-card primary-card">
+            <div class="card-head">
+              <h2>Concession Details</h2>
+            </div>
+
+            <div class="detail-list">
+              <div class="detail-row">
+                <span>Excel Fee</span>
+                <strong id="scaitsFee">&#8377; 0</strong>
+              </div>
+              <div class="detail-row">
+                <span>Total Concession</span>
+                <strong id="totalConcession">&#8377; 0</strong>
+              </div>
+              <div class="detail-row">
+                <span>Net Fee After GST</span>
+                <strong id="netFee">&#8377; 0</strong>
+              </div>
+              <div class="detail-row">
+                <span>GST</span>
+                <strong id="gstFee">&#8377; 0</strong>
+              </div>
+            </div>
+
+            <div class="payable-row">
+              <span>Total Payable</span>
+              <strong id="totalPayable">&#8377; 0</strong>
+            </div>
+          </article>
+
+          <article class="info-card secondary-card" id="yearWiseCard">
+            <div class="card-head">
+              <h2>Year-Wise Concession</h2>
+            </div>
+
+            <div class="detail-list compact-list">
+              <div class="detail-row">
+                <span>1st Year Concession</span>
+                <strong id="firstYearConcession">&#8377; 0</strong>
+              </div>
+              <div class="detail-row">
+                <span>2nd Year Concession</span>
+                <strong id="secondYearConcession">&#8377; 0</strong>
+              </div>
+            </div>
+
+            <p class="helper-text" id="yearNote">
+              Select a class and enter amount to view concession split.
+            </p>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

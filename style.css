@@ -1,0 +1,629 @@
+:root {
+  --bg-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1200' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23030b16'/%3E%3Cstop offset='55%25' stop-color='%230c1730'/%3E%3Cstop offset='100%25' stop-color='%23130f2f'/%3E%3C/linearGradient%3E%3CradialGradient id='g1' cx='20%25' cy='22%25' r='48%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8' stop-opacity='.55'/%3E%3Cstop offset='100%25' stop-color='%2338bdf8' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='g2' cx='80%25' cy='24%25' r='36%25'%3E%3Cstop offset='0%25' stop-color='%239333ea' stop-opacity='.42'/%3E%3Cstop offset='100%25' stop-color='%239333ea' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='g3' cx='58%25' cy='78%25' r='34%25'%3E%3Cstop offset='0%25' stop-color='%2322c55e' stop-opacity='.20'/%3E%3Cstop offset='100%25' stop-color='%2322c55e' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='line' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23ffffff' stop-opacity='.10'/%3E%3Cstop offset='100%25' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cpattern id='grid' width='120' height='120' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 120 0 L 0 0 0 120' fill='none' stroke='%23ffffff' stroke-opacity='.05'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='1600' height='1200' fill='url(%23bg)'/%3E%3Crect width='1600' height='1200' fill='url(%23grid)'/%3E%3Ccircle cx='330' cy='290' r='380' fill='url(%23g1)'/%3E%3Ccircle cx='1230' cy='260' r='290' fill='url(%23g2)'/%3E%3Ccircle cx='940' cy='920' r='250' fill='url(%23g3)'/%3E%3Cpath d='M-80 890 C 280 710 480 720 760 900 S 1320 1100 1690 880' fill='none' stroke='url(%23line)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M-120 1010 C 290 820 520 850 790 1010 S 1320 1210 1710 980' fill='none' stroke='url(%23line)' stroke-width='2' stroke-linecap='round' stroke-opacity='.7'/%3E%3C/svg%3E");
+  --panel-bg: rgba(10, 17, 32, 0.7);
+  --panel-border: rgba(255, 255, 255, 0.16);
+  --card-bg: rgba(14, 22, 40, 0.76);
+  --card-border: rgba(148, 163, 184, 0.22);
+  --text-primary: #f8fafc;
+  --text-muted: #c7d2fe;
+  --text-soft: rgba(226, 232, 240, 0.72);
+  --line: rgba(255, 255, 255, 0.1);
+  --accent-blue: #8fb8ff;
+  --accent-cyan: #90e0ff;
+  --accent-orange: #f8b26a;
+  --accent-green: #7ef0b8;
+  --shadow-lg: 0 28px 70px rgba(2, 6, 23, 0.58);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 20px 45px rgba(15, 23, 42, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 16% 18%, rgba(59, 130, 246, 0.12), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(168, 85, 247, 0.12), transparent 26%),
+    radial-gradient(circle at 58% 82%, rgba(34, 197, 94, 0.08), transparent 24%),
+    #020617;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(2, 6, 23, 0.84), rgba(15, 23, 42, 0.48)),
+    var(--bg-image) center / cover no-repeat;
+  filter: saturate(1.08);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 42%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.18), rgba(2, 6, 23, 0.68));
+  z-index: -1;
+}
+
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding:
+    max(20px, env(safe-area-inset-top))
+    max(14px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom))
+    max(14px, env(safe-area-inset-left));
+}
+
+.app-shell {
+  width: min(100%, 860px);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 28px;
+  padding: 22px 22px 24px;
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.62)),
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.12), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.12), transparent 28%);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(96, 165, 250, 0.12), transparent 18%),
+    radial-gradient(circle at 82% 24%, rgba(248, 178, 106, 0.1), transparent 22%),
+    radial-gradient(circle at 58% 70%, rgba(255, 255, 255, 0.04), transparent 28%);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.hero-header,
+.controls,
+.dashboard {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-header {
+  text-align: center;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.34em;
+  color: rgba(191, 219, 254, 0.82);
+  margin-bottom: 8px;
+}
+
+.hero-header h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.85rem, 3.4vw, 2.85rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(210px, 270px));
+  gap: 12px;
+  align-items: end;
+  justify-content: center;
+  max-width: 560px;
+  margin: 0 auto 18px;
+}
+
+.field label {
+  display: block;
+  color: rgba(224, 231, 255, 0.88);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.field select,
+.currency-input input {
+  width: 100%;
+  border: 1.5px solid transparent;
+  border-radius: 15px;
+  padding: 13px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, rgba(6, 12, 26, 0.94), rgba(15, 23, 42, 0.86));
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 10px 24px rgba(2, 6, 23, 0.24);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field select {
+  appearance: none;
+  padding-right: 46px;
+  cursor: pointer;
+  color-scheme: dark;
+  background:
+    linear-gradient(180deg, rgba(5, 11, 23, 0.96), rgba(15, 23, 42, 0.9)),
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.08), transparent 45%);
+}
+
+.select-field {
+  position: relative;
+}
+
+.select-field::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.currency-input {
+  position: relative;
+}
+
+.currency-input input {
+  padding-right: 46px;
+}
+
+.currency-symbol {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.92);
+}
+
+.field select:focus,
+.field select:hover,
+.currency-input input:focus,
+.currency-input input:hover {
+  border-color: rgba(148, 163, 184, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 4px rgba(96, 165, 250, 0.09),
+    0 18px 30px rgba(15, 23, 42, 0.24);
+  transform: translateY(-1px);
+}
+
+.field select option {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+.field select option:checked {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.field select:invalid {
+  color: rgba(245, 247, 255, 0.72);
+}
+
+.amount-field .currency-input input {
+  border-color: rgba(248, 178, 106, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 4px rgba(248, 178, 106, 0.06),
+    0 12px 26px rgba(15, 23, 42, 0.22);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(250px, 0.82fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.dashboard.yearwise-hidden {
+  grid-template-columns: 1fr;
+}
+
+.dashboard.yearwise-hidden .secondary-card {
+  display: none;
+}
+
+.info-card {
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.78)),
+    var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+  box-shadow: var(--shadow-glow);
+  padding: 16px 16px 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(96, 165, 250, 0.12), transparent 34%),
+    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.08), transparent 30%);
+  pointer-events: none;
+}
+
+.card-head,
+.detail-list,
+.payable-row,
+.helper-text {
+  position: relative;
+  z-index: 1;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(125, 184, 255, 0.42), transparent);
+}
+
+.card-head h2 {
+  color: var(--accent-blue);
+  font-family: "Outfit", sans-serif;
+  font-size: 1.22rem;
+  font-weight: 700;
+}
+
+.detail-list {
+  display: grid;
+  gap: 2px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-row span {
+  font-size: 0.92rem;
+  color: rgba(226, 232, 240, 0.9);
+  overflow-wrap: anywhere;
+}
+
+.detail-row strong {
+  font-size: 0.96rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
+
+.compact-list .detail-row:last-child,
+.primary-card .detail-list .detail-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.payable-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 12px;
+  padding-top: 4px;
+}
+
+.payable-row span {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.payable-row strong {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2rem, 3.6vw, 2.9rem);
+  line-height: 1;
+  color: var(--accent-green);
+  text-shadow: 0 10px 22px rgba(16, 185, 129, 0.16);
+}
+
+.secondary-card {
+  min-height: 100%;
+}
+
+.helper-text {
+  margin-top: 12px;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input,
+select {
+  touch-action: manipulation;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .app-shell {
+    background: rgba(15, 23, 42, 0.94);
+  }
+
+  .info-card {
+    background: rgba(15, 23, 42, 0.96);
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    width: min(100%, 640px);
+    padding: 18px 16px 18px;
+    border-radius: 22px;
+  }
+
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+    justify-content: normal;
+    margin: 0 0 16px;
+  }
+
+  .dashboard {
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: 10px;
+  }
+
+  .dashboard.yearwise-hidden {
+    grid-template-columns: 1fr;
+  }
+
+  .card-head h2 {
+    font-size: 1.1rem;
+  }
+
+  .detail-row strong {
+    white-space: normal;
+    text-align: right;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+  }
+
+  .app-shell {
+    width: 100%;
+    padding: 14px 10px 14px;
+    border-radius: 16px;
+  }
+
+  .app-shell::before {
+    inset: 7px;
+    border-radius: 12px;
+  }
+
+  .hero-header {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+
+  .eyebrow {
+    letter-spacing: 0.14em;
+    font-size: 0.6rem;
+  }
+
+  .hero-header h1 {
+    font-size: 1.65rem;
+  }
+
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.94fr);
+    gap: 8px;
+  }
+
+  .dashboard.yearwise-hidden {
+    grid-template-columns: 1fr;
+  }
+
+  .field label {
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+  }
+
+  .field select,
+  .currency-input input {
+    border-radius: 13px;
+    font-size: 16px;
+    padding: 11px 13px;
+  }
+
+  .currency-input input {
+    padding-right: 40px;
+  }
+
+  .currency-symbol {
+    right: 12px;
+    font-size: 1.3rem;
+  }
+
+  .select-field::after {
+    right: 14px;
+    bottom: 16px;
+  }
+
+  .info-card {
+    border-radius: 14px;
+    padding: 11px 9px;
+  }
+
+  .card-head h2 {
+    font-size: 0.92rem;
+  }
+
+  .card-head {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .detail-row {
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .detail-row span,
+  .detail-row strong,
+  .helper-text {
+    font-size: 0.74rem;
+  }
+
+  .payable-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .payable-row strong {
+    font-size: 1.7rem;
+  }
+
+  .payable-row span {
+    font-size: 0.95rem;
+  }
+
+  .helper-text {
+    margin-top: 8px;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 380px) {
+  .controls {
+    gap: 6px;
+  }
+
+  .app-shell {
+    padding: 12px 8px 12px;
+    border-radius: 14px;
+  }
+
+  .app-shell::before {
+    inset: 6px;
+    border-radius: 10px;
+  }
+
+  .dashboard {
+    gap: 6px;
+  }
+
+  .info-card {
+    border-radius: 12px;
+    padding: 10px 8px;
+  }
+
+  .card-head {
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+
+  .card-head h2 {
+    font-size: 0.82rem;
+  }
+
+  .detail-row {
+    gap: 6px;
+    padding: 7px 0;
+  }
+
+  .detail-row span,
+  .detail-row strong,
+  .helper-text {
+    font-size: 0.68rem;
+  }
+
+  .payable-row {
+    gap: 5px;
+  }
+
+  .payable-row span {
+    font-size: 0.82rem;
+  }
+
+  .payable-row strong {
+    font-size: 1.45rem;
+  }
+}
