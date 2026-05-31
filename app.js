@@ -85,7 +85,10 @@ function isYearWiseClass(selectedClass) {
 }
 
 function toggleYearWiseSection(selectedClass) {
-  dashboardEl.classList.toggle("yearwise-hidden", !isYearWiseClass(selectedClass));
+  dashboardEl.classList.toggle(
+    "yearwise-hidden",
+    !isYearWiseClass(selectedClass),
+  );
 }
 
 function render(state = initialState) {
@@ -120,7 +123,8 @@ function calculate() {
     totalPayable: Number.isFinite(inputValue) ? inputValue : 0,
     firstYearConcession: 0,
     secondYearConcession: 0,
-    yearNote: "Single-year batch. Year-wise split is available for 11th programs.",
+    yearNote:
+      "Single-year batch. Year-wise split is available for 11th programs.",
   };
 
   if (!Number.isFinite(inputValue) || inputValue < 0) {
@@ -134,7 +138,9 @@ function calculate() {
     const secondYearNetFee = Math.round(secondYear / 1.18);
     const secondYearConcession = config.sec_fee - secondYearNetFee;
     const grossFee = oneYear - 10000 - config.uniform;
-    const netFee = Math.round(grossFee / 1.18 + 5000 + 10000 + secondYearNetFee);
+    const netFee = Math.round(
+      grossFee / 1.18 + 5000 + 10000 + secondYearNetFee,
+    );
     const firstYearNetFee = Math.round(grossFee / 1.18 + 5000 + 10000);
     const firstYearConcession = config.scaitsfee - firstYearNetFee;
 
@@ -144,7 +150,8 @@ function calculate() {
     state.totalPayable = oneYear + secondYear;
     state.firstYearConcession = firstYearConcession;
     state.secondYearConcession = secondYearConcession;
-    state.yearNote = "11th program detected. Concession is split between 1st and 2nd year.";
+    state.yearNote =
+      "11th program detected. Concession is split between 1st and 2nd year.";
   } else if (
     selectedClass === "(12th/Dropper)-NM" ||
     selectedClass === "(12th/Dropper)-MED"
@@ -157,16 +164,37 @@ function calculate() {
     state.netFee = netFee;
     state.gst = Math.round(netFee * 0.18);
     state.totalPayable = grossFee + config.study + config.uniform;
-    state.yearNote = "Dropper / 12th batch is calculated as a single-year concession.";
+    state.yearNote =
+      "Dropper / 12th batch is calculated as a single-year concession.";
   } else {
-    const grossFee = inputValue - config.study - config.uniform;
-    const netFee = Math.round(grossFee / 1.18) + 2500 + 2500;
-    const concession = config.scaitsfee - netFee;
+    const isLowAmountClass610 =
+      selectedClass === "6th" ||
+      selectedClass === "7th" ||
+      selectedClass === "8th" ||
+      selectedClass === "9th" ||
+      selectedClass === "10th";
 
-    state.totalConcession = concession;
-    state.netFee = netFee;
-    state.gst = Math.round(netFee * 0.18);
-    state.totalPayable = grossFee + config.study + config.uniform;
+    if (isLowAmountClass610 && inputValue < 18000) {
+      const grossFee = inputValue;
+      const netFee = Math.round(grossFee / 1.18);
+      const concession = config.scaitsfee - netFee;
+
+      state.totalConcession = concession;
+      state.netFee = netFee;
+      state.gst = Math.round(grossFee - netFee);
+      state.totalPayable = grossFee;
+      state.yearNote =
+        "Amount below ₹18,000 for classes 6–10 skips uniform/study deduction and applies only 18% GST.";
+    } else {
+      const grossFee = inputValue - config.study - config.uniform;
+      const netFee = Math.round(grossFee / 1.18) + 2500 + 2500;
+      const concession = config.scaitsfee - netFee;
+
+      state.totalConcession = concession;
+      state.netFee = netFee;
+      state.gst = Math.round(netFee * 0.18);
+      state.totalPayable = grossFee + config.study + config.uniform;
+    }
   }
 
   render(state);
